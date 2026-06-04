@@ -1,0 +1,52 @@
+---
+name: Trinity College Dublin
+description: Trinity College Dublin public developer/API footprint review for APIs.json cataloging.
+url: https://raw.githubusercontent.com/api-evangelist/trinity-college-dublin/refs/heads/main/review.yml
+created: '2026-06-03'
+modified: '2026-06-03'
+reviews:
+  - date: '2026-06-03'
+    rating: 2
+    summary: >-
+      Trinity College Dublin (QS World 2025 #98) has no dedicated developer portal or
+      documented open-API program. Real, standards-based API surfaces exist via the
+      Library: TARA, a DSpace institutional repository with an OAI-PMH metadata interface,
+      and Digital Collections, a Hyrax/Samvera platform serving IIIF Presentation manifests
+      (Book of Kells and other manuscripts). Both load in a browser (HTTP 200) but are
+      fronted by bot-mitigation (Cloudflare "Just a moment..." on tara.tcd.ie returning 403;
+      reCAPTCHA interstitial on digitalcollections.tcd.ie) that blocks unattended
+      programmatic access, so they are not openly machine-callable as published. The
+      TCDLibrary GitHub org and its TCD-Hyrax-Web-App repo were confirmed live. Federated
+      identity is via HEAnet Edugate/eduGAIN SAML, not a public OAuth/OpenID developer API.
+      No endpoints were fabricated; every URL below was probed live.
+    endpoints:
+      - url: https://www.tcd.ie/
+        status: 200
+        note: Official institutional website resolves.
+      - url: https://www.tcd.ie/library/
+        status: 200
+        note: Library of Trinity College Dublin homepage.
+      - url: https://www.tara.tcd.ie/
+        status: 403
+        note: DSpace repository (TARA) behind Cloudflare bot-mitigation; loads in a browser.
+      - url: https://www.tara.tcd.ie/oai/request?verb=Identify
+        status: 403
+        note: OAI-PMH path blocked to automated clients (Cloudflare challenge).
+      - url: https://www.tara.tcd.ie/dspace-oai/request?verb=Identify
+        status: 403
+        note: Alternate DSpace OAI path; same bot-mitigation block.
+      - url: https://digitalcollections.tcd.ie/
+        status: 200
+        note: Hyrax/Samvera Digital Collections; browser load OK, reCAPTCHA gate for bots.
+      - url: https://digitalcollections.tcd.ie/concern/works/hm50tr726/manifest
+        status: 200
+        note: IIIF manifest URL returns 200 but body is a reCAPTCHA interstitial, not JSON, for automated requests.
+      - url: https://github.com/TCDLibrary
+        status: 200
+        note: Official Library GitHub org confirmed.
+      - url: https://github.com/TCDLibrary/TCD-Hyrax-Web-App
+        status: 200
+        note: Ruby/Hyrax web app source for Digital Collections.
+      - url: https://www.heanet.ie/services/identity-access/edugate
+        status: 200
+        note: HEAnet Edugate (eduGAIN) SAML federation used for institutional identity.

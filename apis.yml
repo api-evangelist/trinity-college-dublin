@@ -1,0 +1,94 @@
+---
+aid: trinity-college-dublin
+name: Trinity College Dublin
+description: >-
+  Trinity College Dublin (the University of Dublin) is Ireland's oldest university,
+  founded in 1592, and ranked #98 in the QS World University Rankings 2025. Its public
+  developer/API footprint is not organized around a dedicated developer portal or a
+  documented open-API program; instead it is expressed through standards-based scholarly
+  infrastructure. The Library of Trinity College Dublin runs TARA (Trinity's Access to
+  Research Archive), a DSpace institutional repository that exposes an OAI-PMH metadata
+  interface, and Digital Collections, a Hyrax/Samvera platform that serves IIIF
+  Presentation manifests for digitised manuscripts including the Book of Kells. Both are
+  publicly reachable in a browser but currently sit behind bot-mitigation (Cloudflare /
+  reCAPTCHA), so they are not openly machine-callable without interactive access. Federated
+  identity is provided through HEAnet's Edugate (eduGAIN) SAML federation rather than a
+  public OAuth/OpenID developer API.
+type: Index
+position: Consumer
+access: 3rd-Party
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/trinity-college-dublin/refs/heads/main/apis.yml
+tags:
+  - Education
+  - Higher Education
+  - University
+  - Ireland
+  - Library
+  - Repository
+  - Open Access
+  - IIIF
+  - OAI-PMH
+created: '2026-06-03'
+modified: '2026-06-03'
+specificationVersion: '0.19'
+apis:
+  - aid: trinity-college-dublin:tara-oai
+    name: TARA OAI-PMH (Trinity's Access to Research Archive)
+    description: >-
+      TARA is Trinity College Dublin's open-access institutional repository, built on
+      DSpace. It exposes an OAI-PMH (Open Archives Initiative Protocol for Metadata
+      Harvesting) interface for harvesting Dublin Core and other metadata about theses,
+      articles, and other research outputs. The repository is harvested by national and
+      European aggregators (e.g. RIAN, OpenAIRE). The endpoint is reachable interactively
+      but is currently fronted by bot-mitigation that returns HTTP 403 to unattended
+      programmatic clients.
+    humanURL: https://www.tcd.ie/library/riss/tara/
+    tags: [ Repository, OAI-PMH, Open Access, Metadata, DSpace ]
+    properties:
+      - type: Documentation
+        url: https://libguides.tcd.ie/TARA
+      - type: Website
+        url: https://www.tara.tcd.ie/
+  - aid: trinity-college-dublin:digital-collections-iiif
+    name: TCD Digital Collections (IIIF)
+    description: >-
+      Digital Collections is the Library of Trinity College Dublin's Hyrax/Samvera-based
+      digital asset repository, providing access to digitised manuscripts and collections
+      including the Book of Kells. The platform serves IIIF (International Image
+      Interoperability Framework) Presentation manifests per work, enabling use in
+      IIIF-compatible viewers. Manifests are reachable interactively in a browser but the
+      site is fronted by reCAPTCHA bot-mitigation that blocks unattended automated requests.
+    humanURL: https://digitalcollections.tcd.ie/
+    tags: [ IIIF, Library, Digital Collections, Manuscripts, Images ]
+    properties:
+      - type: Documentation
+        url: https://www.tcd.ie/library/dris/
+      - type: Website
+        url: https://digitalcollections.tcd.ie/
+      - type: GitHub
+        url: https://github.com/TCDLibrary/TCD-Hyrax-Web-App
+common:
+  - type: Website
+    url: https://www.tcd.ie/
+  - type: GitHub
+    url: https://github.com/TCDLibrary
+  - type: LinkedIn
+    url: https://www.linkedin.com/school/trinity-college-dublin/
+  - type: Library
+    url: https://www.tcd.ie/library/
+  - type: SourceCode
+    url: https://github.com/TCDLibrary/TCD-Hyrax-Web-App
+  - type: Authentication
+    url: https://www.heanet.ie/services/identity-access/edugate
+  - type: Plans
+    url: plans/trinity-college-dublin-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/trinity-college-dublin-rate-limits.yml
+  - type: FinOps
+    url: finops/trinity-college-dublin-finops.yml
+  - type: Review
+    url: review.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
