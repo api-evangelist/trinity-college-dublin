@@ -1,0 +1,64 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "tcd": "https://www.tcd.ie/ns#",
+    "schema": "https://schema.org/",
+    "name": "schema:name",
+    "url": "schema:url",
+    "description": "schema:description",
+    "foundingDate": "schema:foundingDate",
+    "logo": "schema:logo",
+    "sameAs": "schema:sameAs",
+    "department": "schema:department",
+    "CollegeOrUniversity": "schema:CollegeOrUniversity",
+    "Library": "schema:Library",
+    "Dataset": "schema:Dataset",
+    "DigitalDocument": "schema:DigitalDocument",
+    "CreativeWork": "schema:CreativeWork",
+    "identifier": "schema:identifier",
+    "title": "schema:name",
+    "creator": "schema:creator",
+    "date": "schema:dateCreated",
+    "subject": "schema:about",
+    "type": "schema:additionalType",
+    "rights": "schema:license",
+    "manifest": {
+      "@id": "tcd:iiifManifest",
+      "@type": "@id"
+    },
+    "oaiIdentifier": "tcd:oaiIdentifier",
+    "repository": {
+      "@id": "schema:isPartOf",
+      "@type": "@id"
+    }
+  },
+  "@type": "CollegeOrUniversity",
+  "name": "Trinity College Dublin",
+  "alternateName": "The University of Dublin",
+  "url": "https://www.tcd.ie/",
+  "foundingDate": "1592",
+  "description": "Trinity College Dublin (the University of Dublin) is Ireland's oldest university, founded in 1592. Its scholarly infrastructure includes the TARA institutional repository (DSpace/OAI-PMH) and the Library's IIIF-based Digital Collections.",
+  "sameAs": [
+    "https://www.linkedin.com/school/trinity-college-dublin/",
+    "https://github.com/TCDLibrary"
+  ],
+  "department": [
+    {
+      "@type": "Library",
+      "name": "Library of Trinity College Dublin",
+      "url": "https://www.tcd.ie/library/"
+    },
+    {
+      "@type": "Dataset",
+      "name": "TARA (Trinity's Access to Research Archive)",
+      "url": "https://www.tara.tcd.ie/",
+      "description": "DSpace institutional repository exposing an OAI-PMH metadata interface."
+    },
+    {
+      "@type": "CreativeWork",
+      "name": "TCD Digital Collections",
+      "url": "https://digitalcollections.tcd.ie/",
+      "description": "Hyrax/Samvera digital asset repository serving IIIF Presentation manifests."
+    }
+  ]
+}
