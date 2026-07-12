@@ -69,6 +69,8 @@ apis:
       - type: GitHub
         url: https://github.com/TCDLibrary/TCD-Hyrax-Web-App
 common:
+  - type: DomainSecurity
+    url: security/trinity-college-dublin-domain-security.yml
   - type: Website
     url: https://www.tcd.ie/
   - type: GitHub
