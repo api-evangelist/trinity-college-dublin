@@ -43,7 +43,7 @@ tags:
   - OAI-PMH
 created: '2026-06-03'
 modified: '2026-06-03'
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 apis:
   - aid: trinity-college-dublin:tara-oai
     name: TARA OAI-PMH (Trinity's Access to Research Archive)
