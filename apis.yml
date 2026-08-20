@@ -72,7 +72,18 @@ apis:
       IIIF-compatible viewers. Manifests are reachable interactively in a browser but the
       site is fronted by reCAPTCHA bot-mitigation that blocks unattended automated requests.
     humanURL: https://digitalcollections.tcd.ie/
-    tags: [ IIIF, Library, Digital Collections, Manuscripts, Images ]
+    tags:
+    - IIIF
+    - Library
+    - Digital Collections
+    - Manuscripts
+    - Image
+    tags_raw:
+    - IIIF
+    - Library
+    - Digital Collections
+    - Manuscripts
+    - Images
     properties:
       - type: Documentation
         url: https://www.tcd.ie/library/dris/
