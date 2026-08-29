@@ -15,6 +15,18 @@ description: >-
   identity is provided through HEAnet's Edugate (eduGAIN) SAML federation rather than a
   public OAuth/OpenID developer API.
 type: Index
+deliveryModel:
+  model: unknown
+  open_source: unknown
+  commercial: true
+  callable_host: false
+  label: Delivery model not determined — needs a product licence on record
+  confidence: low
+  source:
+  - pricing
+  - repository-unlicensed
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: free
   onboarding: unknown
@@ -92,6 +104,8 @@ apis:
       - type: GitHub
         url: https://github.com/TCDLibrary/TCD-Hyrax-Web-App
 common:
+  - type: IssueTracker
+    url: https://github.com/TCDLibrary/TCD-Hyrax-Web-App/issues
   - type: DomainSecurity
     url: security/trinity-college-dublin-domain-security.yml
   - type: Website
