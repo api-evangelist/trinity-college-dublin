@@ -1,19 +1,25 @@
 ---
 aid: trinity-college-dublin
 name: Trinity College Dublin
+x-type: university
+x-category: Public Research University
 description: >-
-  Trinity College Dublin (the University of Dublin) is Ireland's oldest university,
-  founded in 1592, and ranked #98 in the QS World University Rankings 2025. Its public
-  developer/API footprint is not organized around a dedicated developer portal or a
-  documented open-API program; instead it is expressed through standards-based scholarly
-  infrastructure. The Library of Trinity College Dublin runs TARA (Trinity's Access to
-  Research Archive), a DSpace institutional repository that exposes an OAI-PMH metadata
-  interface, and Digital Collections, a Hyrax/Samvera platform that serves IIIF
-  Presentation manifests for digitised manuscripts including the Book of Kells. Both are
-  publicly reachable in a browser but currently sit behind bot-mitigation (Cloudflare /
-  reCAPTCHA), so they are not openly machine-callable without interactive access. Federated
-  identity is provided through HEAnet's Edugate (eduGAIN) SAML federation rather than a
-  public OAuth/OpenID developer API.
+  Trinity College Dublin, the University of Dublin, founded in 1592, is Ireland's oldest
+  university and a legal deposit library for Ireland and the United Kingdom since 1801.
+  Trinity operates no public developer portal, publishes no OpenAPI, issues no API keys and
+  runs no documented open-API programme — and this profile says so rather than padding the
+  gap. What Trinity does operate, and what is recorded here, is standards-based scholarly and
+  identity infrastructure: a self-hosted Shibboleth Identity Provider on its own domain
+  (idp.tcd.ie, scope tcd.ie) registered in HEAnet's Edugate federation and exported to
+  eduGAIN; a Microsoft Entra ID tenant with live OIDC discovery; an OpenSearch 1.1 description
+  document authored by Trinity's own Digital and Web team; DataCite consortium membership with
+  five prefixes and 16,031 DOIs across five registered repositories; and Crossref membership.
+  Its two flagship repositories — TARA (DSpace) and Digital Collections (Hyrax/Samvera, home of
+  the Book of Kells) — sit on Trinity's own hosts but are fronted by Cloudflare and F5
+  bot-mitigation that returns a challenge to every unattended client, so they are live but not
+  machine-callable. eDeposit Ireland, the national legal-deposit repository Trinity Library
+  administers, is the one repository that answers a harvester, and it does so as a tenant on
+  Atmire's Open Repository platform rather than as Trinity's own engineering.
 type: Index
 deliveryModel:
   model: unknown
@@ -44,46 +50,136 @@ access: 3rd-Party
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/trinity-college-dublin.png
 url: https://raw.githubusercontent.com/api-evangelist/trinity-college-dublin/refs/heads/main/apis.yml
 tags:
-  - Education
-  - Higher Education
   - University
+  - Higher Education
+  - Education
   - Ireland
+  - Research Repository
+  - Identity Federation
   - Library
-  - Repository
   - Open Access
+  - Digital Collections
   - IIIF
   - OAI-PMH
+  - Shibboleth
+  - DataCite
+  - Legal Deposit
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-09-01'
 specificationVersion: '0.23'
+x-coverage:
+  state: gated
+  reason: bot_blocked
+  detail: >-
+    Trinity's two institution-operated repository surfaces — TARA at www.tara.tcd.ie and
+    Digital Collections at digitalcollections.tcd.ie — are both reachable in a browser and both
+    refuse unattended clients. TARA returns a Cloudflare 403 interstitial on every path,
+    including /oai/request and /server/oai/request. Digital Collections returns a soft-200
+    reCAPTCHA page from an F5 Distributed Cloud edge on every path, including /robots.txt and
+    IIIF manifest URLs, so the 200 is not evidence of a readable surface. Neither is dead and
+    neither is an authentication wall; both are bot mitigation. Everything reachable WAS read:
+    the Shibboleth IdP metadata, the Entra ID OIDC and SAML metadata, the OpenSearch descriptor,
+    the eDeposit Ireland OAI-PMH Identify/ListMetadataFormats/ListSets responses and the DSpace
+    REST root, and the DataCite, Crossref and ROR registry records. Beyond that there is simply
+    nothing to find: api.tcd.ie, data.tcd.ie and developer.tcd.ie do not resolve, and
+    www.tcd.ie/llms.txt returns 404.
+  generated: '2026-09-01'
+  method: probed
+  evidence:
+    - url: https://www.tara.tcd.ie/oai/request?verb=Identify
+      status: 403
+    - url: https://www.tara.tcd.ie/server/oai/request?verb=Identify
+      status: 403
+    - url: https://digitalcollections.tcd.ie/
+      status: 200
+    - url: https://digitalcollections.tcd.ie/concern/works/kh04dp74f/manifest
+      status: 200
+    - url: https://idp.tcd.ie/idp/shibboleth
+      status: 200
+    - url: https://www.edepositireland.ie/server/oai/request?verb=Identify
+      status: 200
+    - url: https://www.tcd.ie/assets/xml/tcd-opensearch/tcd-opensearch.xml
+      status: 200
+    - url: https://api.datacite.org/providers/tcd
+      status: 200
+    - url: https://www.tcd.ie/llms.txt
+      status: 404
+    - url: https://api.tcd.ie/
+      status: 0
 apis:
+  - aid: trinity-college-dublin:shibboleth-idp
+    name: Trinity Shibboleth Identity Provider (SAML 2.0 metadata)
+    x-operator: institution
+    description: >-
+      Trinity's own Shibboleth IdP, self-hosted on its own registrable domain: idp.tcd.ie
+      resolves through idpha.tcd.ie to 134.226.14.232, inside Trinity's 134.226.0.0/16
+      allocation. The metadata endpoint serves an unauthenticated SAML 2.0 EntityDescriptor
+      (entityID https://idp.tcd.ie/idp/shibboleth) carrying an IDPSSODescriptor and a
+      shibmd:Scope of tcd.ie. The entity is registered in HEAnet's Edugate federation and
+      exported to eduGAIN, confirmed on the REFEDS Metadata Explorer. This is the strongest
+      institution-operated, machine-readable contract Trinity publishes.
+    humanURL: https://www.tcd.ie/itservices/our-services/edugate---federated-access/
+    baseURL: https://idp.tcd.ie/idp/shibboleth
+    tags: [ Identity Federation, Shibboleth, SAML, eduGAIN, Edugate ]
+    properties:
+      - type: Documentation
+        url: https://www.tcd.ie/itservices/our-services/edugate---federated-access/
+      - type: Website
+        url: https://idp.tcd.ie/idp/shibboleth
+      - type: Authentication
+        url: authentication/trinity-college-dublin-authentication.yml
+      - type: Conformance
+        url: conformance/trinity-college-dublin-domain-standards.yml
+  - aid: trinity-college-dublin:entra-id-tenant
+    name: Trinity Microsoft Entra ID tenant (OIDC + SAML metadata)
+    x-operator: federation
+    description: >-
+      Trinity's Microsoft Entra ID tenant, d595be8d-b306-45f4-8064-9e5b82fbe52b, resolved from
+      the tcd.ie domain hint. OpenID Connect discovery and SAML federation metadata both answer
+      unauthenticated. Recorded as `federation` rather than discarded as a vendor host: the host
+      and the protocol implementation are Microsoft's, the tenant and the identities in it are
+      Trinity's, and rss.tcd.ie was observed redirecting sign-in here. There is no public client
+      registration and no third-party developer access.
+    humanURL: https://www.tcd.ie/itservices/our-services/
+    baseURL: https://login.microsoftonline.com/tcd.ie/v2.0/.well-known/openid-configuration
+    tags: [ Identity Federation, OpenID Connect, SAML, Entra ID ]
+    properties:
+      - type: OpenIDConnectDiscovery
+        url: https://login.microsoftonline.com/tcd.ie/v2.0/.well-known/openid-configuration
+      - type: Authentication
+        url: authentication/trinity-college-dublin-authentication.yml
   - aid: trinity-college-dublin:tara-oai
     name: TARA OAI-PMH (Trinity's Access to Research Archive)
+    x-operator: institution
     description: >-
-      TARA is Trinity College Dublin's open-access institutional repository, built on
-      DSpace. It exposes an OAI-PMH (Open Archives Initiative Protocol for Metadata
-      Harvesting) interface for harvesting Dublin Core and other metadata about theses,
-      articles, and other research outputs. The repository is harvested by national and
-      European aggregators (e.g. RIAN, OpenAIRE). The endpoint is reachable interactively
-      but is currently fronted by bot-mitigation that returns HTTP 403 to unattended
-      programmatic clients.
+      TARA is Trinity's open-access institutional repository, a DSpace deployment on Trinity's
+      own host (www.tara.tcd.ie) with its own DataCite repository registration, TCD.TARA. It
+      exposes an OAI-PMH interface harvested by RIAN and OpenAIRE. Host and content are
+      Trinity's; the OAI-PMH implementation is DSpace's, so no vendor contract is saved here.
+      On 2026-09-01 both /oai/request and /server/oai/request returned a Cloudflare 403
+      interstitial to an unattended client with a browser User-Agent — live, not dead, and not
+      machine-callable.
     humanURL: https://www.tcd.ie/library/riss/tara/
-    tags: [ Repository, OAI-PMH, Open Access, Metadata, DSpace ]
+    baseURL: https://www.tara.tcd.ie/server/oai/request
+    tags: [ Research Repository, OAI-PMH, Open Access, Metadata, DSpace ]
     properties:
       - type: Documentation
         url: https://libguides.tcd.ie/TARA
       - type: Website
-        url: https://www.tara.tcd.ie/
+        url: https://www.tcd.ie/library/riss/tara/
   - aid: trinity-college-dublin:digital-collections-iiif
-    name: TCD Digital Collections (IIIF)
+    name: TCD Digital Collections (IIIF Presentation)
+    x-operator: institution
     description: >-
-      Digital Collections is the Library of Trinity College Dublin's Hyrax/Samvera-based
-      digital asset repository, providing access to digitised manuscripts and collections
-      including the Book of Kells. The platform serves IIIF (International Image
-      Interoperability Framework) Presentation manifests per work, enabling use in
-      IIIF-compatible viewers. Manifests are reachable interactively in a browser but the
-      site is fronted by reCAPTCHA bot-mitigation that blocks unattended automated requests.
-    humanURL: https://digitalcollections.tcd.ie/
+      The Library of Trinity College Dublin's Hyrax/Samvera digital asset repository, on
+      Trinity's own host and built from Trinity's own open-source application
+      (github.com/TCDLibrary/TCD-Hyrax-Web-App), serving digitised manuscripts including the
+      Book of Kells and registering DOIs under DataCite repository TCD.DIGCOLLS. IIIF
+      Presentation manifests are served per work. On 2026-09-01 every path — root, /robots.txt,
+      /catalog.json and a work manifest — returned a soft-200 reCAPTCHA interstitial from an F5
+      Distributed Cloud edge, so the 200 status is not evidence of a readable surface.
+    humanURL: https://www.tcd.ie/library/dris/
+    baseURL: https://digitalcollections.tcd.ie/
     tags:
     - IIIF
     - Library
@@ -101,25 +197,174 @@ apis:
         url: https://www.tcd.ie/library/dris/
       - type: Website
         url: https://digitalcollections.tcd.ie/
-      - type: GitHub
+      - type: SourceCode
         url: https://github.com/TCDLibrary/TCD-Hyrax-Web-App
+  - aid: trinity-college-dublin:edeposit-ireland
+    name: eDeposit Ireland — OAI-PMH and DSpace REST
+    x-operator: tenant
+    description: >-
+      Ireland's national legal-deposit digital repository, administered by the Library of
+      Trinity College Dublin (OAI-PMH Identify reports adminEmail edepositadmin@tcd.ie) and
+      registered under Trinity's DataCite provider as TCD.EDEPOSITIRE. It is the only
+      Trinity-administered repository that answered an unattended harvester on 2026-09-01:
+      Identify, ListMetadataFormats (12 prefixes) and ListSets all returned 200, and the DSpace
+      REST root returns application/hal+json self-reporting "DSpace 7.6". Operator is `tenant`,
+      not `institution`, and deliberately so — www.edepositireland.ie CNAMEs to
+      edepositireland.cname.openrepository.com and the API root carries atmire-* links, so the
+      platform is Atmire's Open Repository. The deposit collections, the publishers and the
+      admin contact are Trinity's; the contract is DSpace/Atmire's and is not saved here.
+    humanURL: https://www.tcd.ie/library/edepositireland/
+    baseURL: https://www.edepositireland.ie/server/oai/request
+    tags: [ Research Repository, OAI-PMH, Legal Deposit, DSpace, Open Access ]
+    properties:
+      - type: Documentation
+        url: https://www.tcd.ie/library/edepositireland/
+      - type: Website
+        url: https://www.edepositireland.ie/
+      - type: Conformance
+        url: conformance/trinity-college-dublin-domain-standards.yml
+  - aid: trinity-college-dublin:opensearch
+    name: Trinity College Dublin site OpenSearch description
+    x-operator: institution
+    description: >-
+      An OpenSearch 1.1 description document served as application/xml from Trinity's own
+      domain and explicitly authored by Trinity — the document's own Developer element reads
+      "Trinity College Dublin, Digital and Web team". Small, but it is a machine-readable
+      contract the institution wrote and still serves. Note that its Url template still points
+      at the retired search.tcd.ie appliance, which now 301s to www.tcd.ie/search/q/.
+    humanURL: https://www.tcd.ie/
+    baseURL: https://www.tcd.ie/assets/xml/tcd-opensearch/tcd-opensearch.xml
+    tags: [ OpenSearch, Search, Website ]
+    properties:
+      - type: Website
+        url: https://www.tcd.ie/assets/xml/tcd-opensearch/tcd-opensearch.xml
+  - aid: trinity-college-dublin:datacite-registrant
+    name: DataCite consortium membership (provider TCD)
+    x-operator: registry
+    description: >-
+      Trinity is a DataCite consortium organization, symbol TCD, country IE, linked to
+      https://ror.org/02tyrky19. It holds five prefixes (10.25546, 10.48495, 10.57864, 10.60557,
+      10.82163) and five registered repositories — TCD.TARA, TCD.DIGCOLLS, TCD.SFGKFN (Virtual
+      Record Treasury of Ireland), TCD.DUP (Dublin University Press) and TCD.EDEPOSITIRE — with
+      16,031 DOIs registered. This is a membership fact about Trinity. DataCite's own API
+      contract belongs to DataCite and is not saved here.
+    humanURL: https://datacite.org/
+    baseURL: https://api.datacite.org/providers/tcd
+    tags: [ DataCite, DOI, Registry, Persistent Identifiers, Research Data ]
+    properties:
+      - type: Registry
+        url: https://api.datacite.org/providers/tcd
+      - type: Conformance
+        url: conformance/trinity-college-dublin-domain-standards.yml
+  - aid: trinity-college-dublin:crossref-member
+    name: Crossref membership (member 49418)
+    x-operator: registry
+    description: >-
+      Crossref member 49418, "Trinity College Dublin, the University of Dublin", holding prefix
+      10.69731. As of the 2026-09-01 probe the member record reports zero deposited DOIs — a
+      live membership that is not yet being exercised, recorded as found rather than inflated.
+    humanURL: https://www.crossref.org/
+    baseURL: https://api.crossref.org/members/49418
+    tags: [ Crossref, DOI, Registry, Persistent Identifiers ]
+    properties:
+      - type: Registry
+        url: https://api.crossref.org/members/49418
+  - aid: trinity-college-dublin:ror-record
+    name: ROR organization record (02tyrky19)
+    x-operator: registry
+    description: >-
+      Trinity's Research Organization Registry identifier, https://ror.org/02tyrky19, the
+      canonical machine-readable organizational identity used across DataCite, Crossref and
+      OpenAIRE. The DataCite provider record for TCD cites it directly.
+    humanURL: https://ror.org/02tyrky19
+    baseURL: https://api.ror.org/v2/organizations/02tyrky19
+    tags: [ ROR, Registry, Persistent Identifiers, Organization Identity ]
+    properties:
+      - type: Registry
+        url: https://api.ror.org/v2/organizations/02tyrky19
+  - aid: trinity-college-dublin:libcal
+    name: Library opening hours and room booking (Springshare LibCal)
+    x-operator: tenant
+    description: >-
+      Trinity Library's LibCal tenancy on Springshare's platform, tcd-ie.libcal.com. The public
+      widget endpoint api_hours_today.php returns a machine-parseable per-branch hours fragment
+      unauthenticated; the LibCal 1.1 JSON API at /api/1.1/hours returns 403 without a
+      Springshare key Trinity has not published. The bookings, branches and hours are Trinity's;
+      the API is Springshare's and is not saved here.
+    humanURL: https://tcd-ie.libcal.com/
+    baseURL: https://tcd-ie.libcal.com/
+    tags: [ Library, Room Booking, Campus Life, LibCal ]
+    properties:
+      - type: Website
+        url: https://tcd-ie.libcal.com/
+  - aid: trinity-college-dublin:libguides
+    name: Library subject and research guides (Springshare LibGuides)
+    x-operator: tenant
+    description: >-
+      Trinity Library's LibGuides tenancy at libguides.tcd.ie, the published documentation
+      surface for TARA and for the Library's generative-AI referencing guidance. The LibGuides
+      API path returns 404 — no public API key is exposed. Content is Trinity's; the platform
+      and any contract are Springshare's.
+    humanURL: https://libguides.tcd.ie/
+    baseURL: https://libguides.tcd.ie/
+    tags: [ Library, Documentation, Research Guides, LibGuides ]
+    properties:
+      - type: Website
+        url: https://libguides.tcd.ie/TARA
+  - aid: trinity-college-dublin:research-support-system
+    name: Trinity Research Support System (RSS)
+    x-operator: institution
+    description: >-
+      Trinity's own research information system at rss.tcd.ie, resolving through
+      tcdlocalportalha.tcd.ie to 134.226.14.238 inside Trinity's own network. Sign-in redirects
+      to Trinity's Entra ID tenant via SAML. Recorded as an institution-operated surface that is
+      entirely authentication-gated: there is no anonymous read, no public research portal and
+      no Pure/Elsevier tenancy — pure.tcd.ie and tcd.elsevierpure.com do not resolve.
+    humanURL: https://www.tcd.ie/itservices/our-services/research-it/
+    baseURL: https://rss.tcd.ie/
+    tags: [ Research Information, Authenticated, Internal ]
+    properties:
+      - type: Documentation
+        url: https://www.tcd.ie/itservices/our-services/research-it/
 common:
-  - type: IssueTracker
-    url: https://github.com/TCDLibrary/TCD-Hyrax-Web-App/issues
-  - type: DomainSecurity
-    url: security/trinity-college-dublin-domain-security.yml
   - type: Website
     url: https://www.tcd.ie/
-  - type: GitHub
-    url: https://github.com/TCDLibrary
-  - type: LinkedIn
-    url: https://www.linkedin.com/school/trinity-college-dublin/
-  - type: Library
+  - type: Documentation
     url: https://www.tcd.ie/library/
+  - type: GitHubOrganization
+    url: https://github.com/TCDLibrary
   - type: SourceCode
     url: https://github.com/TCDLibrary/TCD-Hyrax-Web-App
+  - type: IssueTracker
+    url: https://github.com/TCDLibrary/TCD-Hyrax-Web-App/issues
+  - type: LinkedIn
+    url: https://www.linkedin.com/school/trinity-college-dublin/
+  - type: PrivacyPolicy
+    url: https://www.tcd.ie/privacy/
+  - type: TermsOfService
+    url: https://www.tcd.ie/disclaim/
+  - type: Support
+    url: https://www.tcd.ie/itservices/our-services/it-service-desk/
+  - type: IdentityFederation
+    url: https://www.tcd.ie/itservices/our-services/edugate---federated-access/
+  - type: ResearchRepository
+    url: https://www.tcd.ie/library/riss/tara/
+  - type: LibraryCatalog
+    url: https://www.tcd.ie/library/opub/catalogues.php
+  - type: CourseCatalog
+    url: https://www.tcd.ie/courses/
+  - type: ResearchComputing
+    url: https://www.tchpc.tcd.ie/
+  - type: AIPolicy
+    url: https://www.tcd.ie/academic-affairs/what-we-do/whats-new/generative-ai-statement/
+  - type: AITooling
+    url: https://www.tcd.ie/itservices/keeping-it-secure/artificial-intelligence-ai/
   - type: Authentication
-    url: https://www.heanet.ie/services/identity-access/edugate
+    url: authentication/trinity-college-dublin-authentication.yml
+  - type: Conformance
+    url: conformance/trinity-college-dublin-domain-standards.yml
+  - type: DomainSecurity
+    url: security/trinity-college-dublin-domain-security.yml
   - type: Plans
     url: plans/trinity-college-dublin-plans-pricing.yml
   - type: RateLimits
