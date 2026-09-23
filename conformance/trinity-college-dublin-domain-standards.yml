@@ -1,0 +1,102 @@
+---
+# Education-regime domain-standard conformance for Trinity College Dublin.
+# Kin Score 0.12.0 `domain_standard_conformance` reads this from the CONTRACT/endpoint evidence,
+# never from a prose claim. REWARD-ONLY: only standards with a probed, dated location are listed.
+name: Trinity College Dublin — education domain standard conformance
+slug: trinity-college-dublin
+regime: education
+generated: '2026-09-01'
+method: probed
+source: https://www.tcd.ie/
+notes: >-
+  Every entry below was reached with a live HTTP probe on 2026-09-01 using a browser User-Agent.
+  Standards named in the education regime but NOT evidenced here (scim, lti, oneroster, ed-fi,
+  caliper, qti) are deliberately absent: Trinity runs Blackboard Learn and a Tribal SITS student
+  record system, but neither exposes a publicly probeable conformance surface, and inventing one
+  would credit the institution for an integration nobody outside it can call.
+standards:
+  - standard: shibboleth
+    conformant: true
+    operator: institution
+    evidence:
+      url: https://idp.tcd.ie/idp/shibboleth
+      status: 200
+      content_type: application/xml
+      location: >-
+        Root <EntityDescriptor entityID="https://idp.tcd.ie/idp/shibboleth"> carries an
+        <IDPSSODescriptor> and a <shibmd:Scope regexp="false">tcd.ie</shibmd:Scope> extension in
+        the urn:mace:shibboleth:metadata:1.0 namespace.
+    detail: >-
+      Trinity self-hosts its Shibboleth Identity Provider on its own registrable domain
+      (idp.tcd.ie resolves through idpha.tcd.ie to 134.226.14.232, inside Trinity's own
+      134.226.0.0/16 allocation). The metadata document is Trinity's own artifact, served
+      unauthenticated, and is the strongest institution-operated machine-readable surface in
+      this repository.
+  - standard: saml
+    conformant: true
+    operator: institution
+    evidence:
+      url: https://idp.tcd.ie/idp/shibboleth
+      status: 200
+      content_type: application/xml
+      location: >-
+        xmlns="urn:oasis:names:tc:SAML:2.0:metadata";
+        protocolSupportEnumeration="urn:mace:shibboleth:1.0 urn:oasis:names:tc:SAML:1.1:protocol
+        urn:oasis:names:tc:SAML:2.0:protocol".
+    detail: >-
+      SAML 2.0 metadata is also published for Trinity's Microsoft Entra ID tenant
+      (d595be8d-b306-45f4-8064-9e5b82fbe52b, resolved from the tcd.ie domain hint) at
+      https://login.microsoftonline.com/d595be8d-b306-45f4-8064-9e5b82fbe52b/federationmetadata/2007-06/federationmetadata.xml
+      — probed 200, 28,441 bytes, text/xml. The host is Microsoft's; the tenant is Trinity's.
+  - standard: oai-pmh
+    conformant: true
+    operator: tenant
+    evidence:
+      url: https://www.edepositireland.ie/server/oai/request?verb=Identify
+      status: 200
+      content_type: text/xml
+      location: >-
+        <OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"> …
+        <Identify><repositoryName>eDeposit Ireland</repositoryName>
+        <protocolVersion>2.0</protocolVersion>
+        <adminEmail>edepositadmin@tcd.ie</adminEmail>
+        <earliestDatestamp>2008-06-17T15:20:09Z</earliestDatestamp>
+    detail: >-
+      The only Trinity-administered OAI-PMH endpoint that answered an unattended client.
+      ListMetadataFormats returns 12 prefixes (oai_dc, qdc, mods, mets, marc, rdf, ore, didl,
+      dim, xoai, etdms, uketd_dc); ListSets returns 200. Operator is `tenant`, not
+      `institution`: www.edepositireland.ie CNAMEs to edepositireland.cname.openrepository.com
+      (Atmire Open Repository), and the API root self-reports "DSpace 7.6" with atmire-* links.
+      The service identity, the deposit collections and the admin contact are Trinity's; the
+      protocol implementation is DSpace/Atmire's.
+  - standard: datacite
+    conformant: true
+    operator: registry
+    evidence:
+      url: https://api.datacite.org/providers/tcd
+      status: 200
+      content_type: application/vnd.api+json
+      location: >-
+        data.attributes.symbol = "TCD"; memberType = "consortium_organization";
+        organizationType = "academicInstitution"; rorId = "https://ror.org/02tyrky19";
+        country = "IE"; isActive = true.
+    detail: >-
+      Trinity is a DataCite consortium organization with five prefixes (10.25546, 10.48495,
+      10.57864, 10.60557, 10.82163) and five registered repositories — TCD.TARA, TCD.DIGCOLLS,
+      TCD.SFGKFN (Virtual Record Treasury of Ireland), TCD.DUP (Dublin University Press) and
+      TCD.EDEPOSITIRE. https://api.datacite.org/dois?provider-id=tcd reports 16,031 DOIs.
+      This is a membership fact about Trinity, recorded per the registry rule; DataCite's own
+      contract is NOT saved here and belongs to DataCite.
+  - standard: crossref
+    conformant: true
+    operator: registry
+    evidence:
+      url: https://api.crossref.org/members/49418
+      status: 200
+      content_type: application/json
+      location: >-
+        message.id = 49418; message.primary-name = "Trinity College Dublin, the University of
+        Dublin"; message.prefixes = ["10.69731"]; message.counts.total-dois = 0.
+    detail: >-
+      Registered Crossref member with one prefix and, as of this probe, zero deposited DOIs —
+      recorded honestly as a live membership that is not yet being exercised.

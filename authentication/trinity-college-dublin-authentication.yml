@@ -1,0 +1,65 @@
+---
+# How access to Trinity College Dublin's programmable surfaces is actually established.
+# NOT an OAuth developer program: Trinity publishes no API keys and no client registration.
+name: Trinity College Dublin — authentication and federated identity
+slug: trinity-college-dublin
+generated: '2026-09-01'
+method: probed
+source: https://idp.tcd.ie/idp/shibboleth
+summary: >-
+  Trinity has no public developer authentication surface — no API key issuance, no OAuth client
+  registration, no documented token endpoint for third parties. What it does operate is
+  institutional federated identity for its own members, in two stacks that both answer
+  unauthenticated metadata requests.
+mechanisms:
+  - id: shibboleth-idp
+    type: saml2-idp
+    operator: institution
+    entity_id: https://idp.tcd.ie/idp/shibboleth
+    metadata_url: https://idp.tcd.ie/idp/shibboleth
+    scopes_asserted:
+      - tcd.ie
+      - blackboard.com
+    federation: Edugate (HEAnet), exported to eduGAIN
+    audience: Trinity staff, students and federated service providers
+    public_client_registration: false
+    probed:
+      status: 200
+      content_type: application/xml
+      date: '2026-09-01'
+    method: probed
+    source: https://idp.tcd.ie/idp/shibboleth
+  - id: entra-id-tenant
+    type: oidc-and-saml2
+    operator: federation
+    tenant_id: d595be8d-b306-45f4-8064-9e5b82fbe52b
+    issuer: https://login.microsoftonline.com/d595be8d-b306-45f4-8064-9e5b82fbe52b/v2.0
+    discovery_url: https://login.microsoftonline.com/tcd.ie/v2.0/.well-known/openid-configuration
+    saml_metadata_url: https://login.microsoftonline.com/d595be8d-b306-45f4-8064-9e5b82fbe52b/federationmetadata/2007-06/federationmetadata.xml
+    authorization_endpoint: https://login.microsoftonline.com/d595be8d-b306-45f4-8064-9e5b82fbe52b/oauth2/v2.0/authorize
+    jwks_uri: https://login.microsoftonline.com/d595be8d-b306-45f4-8064-9e5b82fbe52b/discovery/v2.0/keys
+    audience: Trinity accounts on Microsoft 365 and SAML-integrated internal systems (rss.tcd.ie observed redirecting here)
+    public_client_registration: false
+    note: >-
+      login.microsoftonline.com is Microsoft's host and Microsoft's contract. The TENANT is
+      Trinity's, resolved from the tcd.ie domain hint, which is why it is recorded as
+      `federation` rather than discarded as a vendor host.
+    probed:
+      status: 200
+      date: '2026-09-01'
+    method: probed
+    source: https://login.microsoftonline.com/tcd.ie/v2.0/.well-known/openid-configuration
+unauthenticated_surfaces:
+  - url: https://www.edepositireland.ie/server/oai/request?verb=Identify
+    detail: OAI-PMH harvesting is open; no credential required.
+  - url: https://www.tcd.ie/assets/xml/tcd-opensearch/tcd-opensearch.xml
+    detail: OpenSearch 1.1 description document; no credential required.
+blocked_surfaces:
+  - url: https://www.tara.tcd.ie/oai/request?verb=Identify
+    status: 403
+    detail: Cloudflare interstitial ("Just a moment..."), not an authentication requirement.
+  - url: https://digitalcollections.tcd.ie/
+    status: 200
+    detail: >-
+      Soft-200 reCAPTCHA interstitial served by an F5 Distributed Cloud edge to every path,
+      including /robots.txt and IIIF manifest URLs. Not an authentication requirement.
