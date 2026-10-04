@@ -22,16 +22,19 @@ description: >-
   Atmire's Open Repository platform rather than as Trinity's own engineering.
 type: Index
 deliveryModel:
-  model: unknown
+  model: saas
+  license_evidence:
+    not_product:
+    - tcdlibrary/tcd-hyrax-web-app
   open_source: unknown
   commercial: true
   callable_host: false
-  label: Delivery model not determined — needs a product licence on record
+  label: Hosted service · you call their endpoint
   confidence: low
   source:
   - pricing
-  - repository-unlicensed
-  generated: '2026-08-28'
+  - repository-not-product
+  generated: '2026-09-25'
   method: derived
 accessModel:
   pricing: free
@@ -298,6 +301,7 @@ apis:
       - type: Website
         url: https://tcd-ie.libcal.com/
   - aid: trinity-college-dublin:libguides
+    x-published: false
     name: Library subject and research guides (Springshare LibGuides)
     x-operator: tenant
     description: >-
