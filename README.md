@@ -1,4 +1,4 @@
-# Trinity College Dublin (trinity-college-dublin)
+# Trinity College Dublin
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,83 +64,124 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Trinity College Dublin (the University of Dublin), founded in 1592, is Ireland's oldest university and a legal deposit library for Ireland and the United Kingdom since 1801. This repository catalogs its public developer/API footprint as an [APIs.json](https://apisjson.org) profile. Trinity operates **no public developer portal, no OpenAPI, no API keys and no open-API programme**. What it does operate — and what is recorded here — is standards-based scholarly and identity infrastructure, with every surface carrying an `x-operator` saying who actually runs the thing it describes.
+Trinity College Dublin, the University of Dublin, founded in 1592, is Ireland's oldest university and a legal deposit library for Ireland and the United Kingdom since 1801. Trinity operates no public developer portal, publishes no OpenAPI, issues no API keys and runs no documented open-API programme — and this profile says so rather than padding the gap. What Trinity does operate, and what is recorded here, is standards-based scholarly and identity infrastructure: a self-hosted Shibboleth Identity Provider on its own domain (idp.tcd.ie, scope tcd.ie) registered in HEAnet's Edugate federation and exported to eduGAIN; a Microsoft Entra ID tenant with live OIDC discovery; an OpenSearch 1.1 description document authored by Trinity's own Digital and Web team; DataCite consortium membership with five prefixes and 16,031 DOIs across five registered repositories; and Crossref membership. Its two flagship repositories — TARA (DSpace) and Digital Collections (Hyrax/Samvera, home of the Book of Kells) — sit on Trinity's own hosts but are fronted by Cloudflare and F5 bot-mitigation that returns a challenge to every unattended client, so they are live but not machine-callable. eDeposit Ireland, the national legal-deposit repository Trinity Library administers, is the one repository that answers a harvester, and it does so as a tenant on Atmire's Open Repository platform rather than as Trinity's own engineering.
 
-- APIs.json: https://raw.githubusercontent.com/api-evangelist/trinity-college-dublin/refs/heads/main/apis.yml
-- Run with Naftiko: https://github.com/naftiko/fleet?utm_source=api-evangelist&utm_medium=readme&utm_campaign=trinity-college-dublin-api-evangelist&utm_content=repo
+**Areas:** University · Higher Education · Education · Ireland · Research Repository · Identity Federation · Library · Open Access · Digital Collections · IIIF · OAI-PMH · Shibboleth
 
-## Type
+## Trinity College Dublin on APIs.io
 
-- University / Public Research University — Index / Consumer / 3rd-Party
+Everything profiled for Trinity College Dublin is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/trinity-college-dublin/](https://apis.io/providers/trinity-college-dublin/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (12)
 
-University, Higher Education, Education, Ireland, Research Repository, Identity Federation, Library, Open Access, Digital Collections, IIIF, OAI-PMH, Shibboleth, DataCite, Legal Deposit
+- [Trinity Shibboleth Identity Provider (SAML 2.0 metadata)](https://apis.io/apis/trinity-college-dublin/shibboleth-idp/) — Trinity's own Shibboleth IdP, self-hosted on its own registrable domain: idp.tcd.ie resolves through idpha.tcd.ie to 134.226.14.232, inside Trinity's…
+- [Trinity Microsoft Entra ID tenant (OIDC + SAML metadata)](https://apis.io/apis/trinity-college-dublin/entra-id-tenant/) — Trinity's Microsoft Entra ID tenant, d595be8d-b306-45f4-8064-9e5b82fbe52b, resolved from the tcd.ie domain hint. OpenID Connect discovery and SAML…
+- [TARA OAI-PMH (Trinity's Access to Research Archive)](https://apis.io/apis/trinity-college-dublin/tara-oai/) — TARA is Trinity's open-access institutional repository, a DSpace deployment on Trinity's own host (www.tara.tcd.ie) with its own DataCite repository…
+- [TCD Digital Collections (IIIF Presentation)](https://apis.io/apis/trinity-college-dublin/digital-collections-iiif/) — The Library of Trinity College Dublin's Hyrax/Samvera digital asset repository, on Trinity's own host and built from Trinity's own open-source application…
+- [eDeposit Ireland — OAI-PMH and DSpace REST](https://apis.io/apis/trinity-college-dublin/edeposit-ireland/) — Ireland's national legal-deposit digital repository, administered by the Library of Trinity College Dublin (OAI-PMH Identify reports adminEmail…
+- [Trinity College Dublin site OpenSearch description](https://apis.io/apis/trinity-college-dublin/opensearch/) — An OpenSearch 1.1 description document served as application/xml from Trinity's own domain and explicitly authored by Trinity — the document's own Developer…
+- [DataCite consortium membership (provider TCD)](https://apis.io/apis/trinity-college-dublin/datacite-registrant/) — Trinity is a DataCite consortium organization, symbol TCD, country IE, linked to https://ror.org/02tyrky19. It holds five prefixes (10.25546, 10.48495,…
+- [Crossref membership (member 49418)](https://apis.io/apis/trinity-college-dublin/crossref-member/) — Crossref member 49418, "Trinity College Dublin, the University of Dublin", holding prefix 10.69731. As of the 2026-09-01 probe the member record reports…
+- [ROR organization record (02tyrky19)](https://apis.io/apis/trinity-college-dublin/ror-record/) — Trinity's Research Organization Registry identifier, https://ror.org/02tyrky19, the canonical machine-readable organizational identity used across DataCite,…
+- [Library opening hours and room booking (Springshare LibCal)](https://apis.io/apis/trinity-college-dublin/libcal/) — Trinity Library's LibCal tenancy on Springshare's platform, tcd-ie.libcal.com. The public widget endpoint api_hours_today.php returns a machine-parseable…
+- [Library subject and research guides (Springshare LibGuides)](https://apis.io/apis/trinity-college-dublin/libguides/) — Trinity Library's LibGuides tenancy at libguides.tcd.ie, the published documentation surface for TARA and for the Library's generative-AI referencing…
+- [Trinity Research Support System (RSS)](https://apis.io/apis/trinity-college-dublin/research-support-system/) — Trinity's own research information system at rss.tcd.ie, resolving through tcdlocalportalha.tcd.ie to 134.226.14.238 inside Trinity's own network. Sign-in…
 
-## Surfaces, by operator
+### Published properties
 
-**Institution-operated** (Trinity's own hosts and Trinity's own artifacts)
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-- **Trinity Shibboleth Identity Provider (SAML 2.0 metadata)** — `https://idp.tcd.ie/idp/shibboleth`, HTTP 200 `application/xml`. Self-hosted on Trinity's own network (idpha.tcd.ie → 134.226.14.232), `shibmd:Scope` of `tcd.ie`, registered in HEAnet's Edugate federation and exported to eduGAIN. The strongest machine-readable contract Trinity publishes.
-- **TARA OAI-PMH (Trinity's Access to Research Archive)** — DSpace institutional repository on Trinity's host, DataCite repository `TCD.TARA`. Both `/oai/request` and `/server/oai/request` return a Cloudflare 403 interstitial to unattended clients. Live, not machine-callable.
-- **TCD Digital Collections (IIIF Presentation)** — Hyrax/Samvera repository built from Trinity's own open-source app, DataCite repository `TCD.DIGCOLLS`. Every path, including work manifests, returns a soft-200 reCAPTCHA interstitial from an F5 Distributed Cloud edge.
-- **Trinity College Dublin site OpenSearch description** — `https://www.tcd.ie/assets/xml/tcd-opensearch/tcd-opensearch.xml`, HTTP 200 `application/xml`, whose own `<Developer>` element reads "Trinity College Dublin, Digital and Web team".
-- **Trinity Research Support System (RSS)** — `rss.tcd.ie` on Trinity's own network, entirely SAML-gated. No anonymous read; there is no Pure/Elsevier tenancy (pure.tcd.ie and tcd.elsevierpure.com do not resolve).
+#### JSON-LD (1)
 
-**Federation**
+Linked-data contexts for the provider's vocabulary.
 
-- **Trinity Microsoft Entra ID tenant** — tenant `d595be8d-b306-45f4-8064-9e5b82fbe52b`, resolved from the `tcd.ie` domain hint. OIDC discovery and SAML federation metadata both answer unauthenticated. Microsoft's host and contract; Trinity's tenant and identities.
+- [Trinity College Dublin Context](https://apis.io/jsonld/trinity-college-dublin/trinity-college-dublin-context/)
 
-**Tenant** (Trinity's data and service identity, someone else's contract)
+#### Security (2)
 
-- **eDeposit Ireland** — Ireland's national legal-deposit repository, administered by Trinity Library (`adminEmail: edepositadmin@tcd.ie`) and registered as DataCite repository `TCD.EDEPOSITIRE`. The one Trinity-administered repository that answers a harvester: OAI-PMH `Identify`, `ListMetadataFormats` (12 prefixes) and `ListSets` all return 200, and the REST root self-reports DSpace 7.6. `www.edepositireland.ie` CNAMEs to `edepositireland.cname.openrepository.com` — Atmire's Open Repository platform.
-- **Library opening hours and room booking** — Springshare LibCal at `tcd-ie.libcal.com`; the public hours widget answers, the LibCal 1.1 JSON API returns 403 without a key Trinity has not published.
-- **Library subject and research guides** — Springshare LibGuides at `libguides.tcd.ie`.
+Authentication, trust centre, and vulnerability disclosure.
 
-**Registry** (memberships — facts about Trinity, never Trinity's contract)
+- [Trinity College Dublin Authentication](https://apis.io/security/trinity-college-dublin/trinity-college-dublin-authentication/)
+- [Trinity College Dublin Domain Security](https://apis.io/security/trinity-college-dublin/trinity-college-dublin-domain-security/)
 
-- **DataCite** — consortium organization `TCD`, linked to `https://ror.org/02tyrky19`, five prefixes, five repositories, 16,031 DOIs.
-- **Crossref** — member 49418, prefix `10.69731`, zero deposited DOIs as of the probe.
-- **ROR** — `https://ror.org/02tyrky19`.
+#### Plans and pricing (1)
 
-## Artifacts
+Published plans, tiers and prices.
 
-- [conformance/trinity-college-dublin-domain-standards.yml](conformance/trinity-college-dublin-domain-standards.yml) — education-regime conformance: shibboleth, saml, oai-pmh, datacite, crossref, each with a probed location
-- [authentication/trinity-college-dublin-authentication.yml](authentication/trinity-college-dublin-authentication.yml)
-- [plans/trinity-college-dublin-plans-pricing.yml](plans/trinity-college-dublin-plans-pricing.yml)
-- [rate-limits/trinity-college-dublin-rate-limits.yml](rate-limits/trinity-college-dublin-rate-limits.yml)
-- [finops/trinity-college-dublin-finops.yml](finops/trinity-college-dublin-finops.yml)
+- [Trinity College Dublin Plans Pricing](https://apis.io/plans/trinity-college-dublin/trinity-college-dublin-plans-pricing/)
 
-## Timestamps
+#### Rate limits (1)
 
-- Created: 2026-06-03
-- Modified: 2026-09-01
+Published request limits.
 
-## Common Properties
+- [Trinity College Dublin Rate Limits](https://apis.io/rate-limits/trinity-college-dublin/trinity-college-dublin-rate-limits/)
 
-- Website: https://www.tcd.ie/
-- Documentation: https://www.tcd.ie/library/
-- GitHub Organization: https://github.com/TCDLibrary
-- LinkedIn: https://www.linkedin.com/school/trinity-college-dublin/
-- Identity Federation: https://www.tcd.ie/itservices/our-services/edugate---federated-access/
-- Research Repository: https://www.tcd.ie/library/riss/tara/
-- Library Catalog: https://www.tcd.ie/library/opub/catalogues.php
-- Course Catalog: https://www.tcd.ie/courses/
-- Research Computing: https://www.tchpc.tcd.ie/
-- AI Policy: https://www.tcd.ie/academic-affairs/what-we-do/whats-new/generative-ai-statement/
-- AI Tooling: https://www.tcd.ie/itservices/keeping-it-secure/artificial-intelligence-ai/
-- Privacy Policy: https://www.tcd.ie/privacy/
-- Terms of Service: https://www.tcd.ie/disclaim/
-- Support: https://www.tcd.ie/itservices/our-services/it-service-desk/
+#### FinOps (1)
 
-## Notes
+What the API costs to run, by operation.
 
-- Re-profiled 2026-09-01 under the API Evangelist university pipeline, which settles operator attribution before saving anything. No vendor contract is saved in this repository and none was found to remove.
-- Coverage is `gated` / `bot_blocked`: Trinity's two own repository surfaces refuse unattended clients (Cloudflare 403 on TARA; soft-200 reCAPTCHA on Digital Collections). Neither is dead and neither is an authentication wall.
-- `api.tcd.ie`, `data.tcd.ie` and `developer.tcd.ie` do not resolve. `https://www.tcd.ie/llms.txt` returns 404.
-- Education-regime standards evidenced: shibboleth, saml, oai-pmh, datacite, crossref. Not evidenced and deliberately not claimed: scim, lti, oneroster, ed-fi, caliper, qti — Trinity runs Blackboard Learn and Tribal SITS, but neither exposes a publicly probeable conformance surface.
-- No endpoints were fabricated; every URL above was probed live on 2026-09-01 with a browser User-Agent.
+- [Trinity College Dublin Finops](https://apis.io/finops/trinity-college-dublin/trinity-college-dublin-finops/)
 
-## Maintainers
+## Where to find this API
 
-- Kin Lane — kin@apievangelist.com
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.tcd.ie/)
+- [Documentation](https://www.tcd.ie/library/)
+- [Support](https://www.tcd.ie/itservices/our-services/it-service-desk/)
+- [Terms of service](https://www.tcd.ie/disclaim/)
+- [Privacy policy](https://www.tcd.ie/privacy/)
+- [GitHub](https://github.com/TCDLibrary)
+
+## API Evangelist rating
+
+**Kin Score 23.2** — emerging · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 71.4 |
+| Contract quality | 14.3 |
+| Contract governance | 0.0 |
+| Operational transparency | 7.9 |
+| Developer ergonomics | 26.2 |
+| Access clarity | 26.3 |
+
+**Agent readiness 3.1** — human-only
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 24.5** — Education & Research
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/trinity-college-dublin/](https://apis.io/providers/trinity-college-dublin/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Trinity College Dublin: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/trinity-college-dublin/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
